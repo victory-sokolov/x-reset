@@ -38,15 +38,20 @@ async function main() {
         .innerText();
     const tweets = tweetsLocator.replace('posts', '').trim();
     const tweetCount = getPostCount(tweets);
-
     console.info(`Found ${tweetsLocator}`);
 
     for (var i = 1; i <= tweetCount; i++) {
-        await page.click('div[aria-label="More"]');
-        await page.click('span:has-text("Delete")');
-        await page.waitForTimeout(1000);
-        await page.click('div[role="button"] span:has-text("Delete")');
-        await page.waitForTimeout(3000);
+        try {
+            await page.click('[data-testid="unretweet"]', { delay: 0 });
+            await page.click('span:has-text("Undo repost")', { delay: 0 });
+            console.info('Unretweeting...');
+        } catch (err) {
+            await page.click('div[aria-label="More"]');
+            await page.click('span:has-text("Delete")');
+            await page.waitForTimeout(1000);
+            await page.click('div[role="button"] span:has-text("Delete")');
+        }
+
         console.info(`Deleted ${i}/${tweetCount}`);
     }
 
