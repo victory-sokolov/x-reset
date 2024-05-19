@@ -11,7 +11,7 @@
         "start": "node --env-file=.env main.js"
     },
     "devDependencies": {
-        "@playwright/test": "1.42.1",
+        "@playwright/test": "1.44.0",
         "prettier": "3.2.5"
     }
 }
